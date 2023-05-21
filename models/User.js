@@ -22,7 +22,7 @@ User.init(
         unique: true,
         validate: {
             isAlphanumeric: true,
-            len: [10]
+            len: [12]
         }
       },
       password: {
