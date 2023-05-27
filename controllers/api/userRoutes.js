@@ -18,6 +18,7 @@ router.post('/', async (req, res) => {
   
   router.post('/login', async (req, res) => {
     try {
+      // change email to name!
       const userData = await User.findOne({ where: { email: req.body.email } });
   
       if (!userData) {
@@ -48,6 +49,7 @@ router.post('/', async (req, res) => {
     }
   });
   
+  // destroys the session
   router.post('/logout', (req, res) => {
     if (req.session.logged_in) {
       req.session.destroy(() => {

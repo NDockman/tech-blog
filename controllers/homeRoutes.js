@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const { Post, User } = require('../models');
-//const withAuth = require('../utils/auth');
+const withAuth = require('../utils/auth');
 
 router.get("/", (req, res) => {
   if (!req.session.logged_in) {
@@ -8,7 +8,7 @@ router.get("/", (req, res) => {
     return;
   }
   else {
-    res.render("/dashboard");
+    res.render("dashboard");
   }
 });
 
@@ -47,8 +47,7 @@ router.get('/login', (req, res) => {
       return;
     }
   
-    // why render login at this point?
-    //res.render('login');
+    res.render('login');
   });
 
   module.exports = router;
