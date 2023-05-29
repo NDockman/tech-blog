@@ -22,14 +22,14 @@ User.init(
         unique: true,
         validate: {
             isAlphanumeric: true,
-            len: [12]
+            len: [15]
         }
       },
       password: {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
-          len: [8],
+          len: [10],
         },
       },
     },
