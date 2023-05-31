@@ -8,13 +8,13 @@ const sequelize = require('../config/connection');
 
 
 
-//how do I insert documents?
 const seedDatabase = async () => {
     await sequelize.sync({ force: true });
 
+    await User.bulkCreate(userData);
     await Post.bulkCreate(postData);
     await Comment.bulkCreate(commentData);
-    await User.bulkCreate(userData);
+    
 
     process.exit(0);
 }

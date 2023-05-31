@@ -2,12 +2,36 @@ const router = require('express').Router();
 const { Post, User } = require('../models');
 const withAuth = require('../utils/auth');
 
-router.get("/", (req, res) => {
-  // Upon entering the website, go to the homepage
-  res.render("homepage");
-  // On the homepage, show ALL existing blog posts
-  res.render("post");
-  // When on the homepage and a blog post is clicked, redirect using  res.redirect("/post/:id")
+// router.get("/", (req, res) => {
+
+//   // When on the homepage and a blog post is clicked, redirect using  res.redirect("/post/:id")
+// });
+
+router.get("*#")
+
+router.get('/', async (req, res) => {
+  try {
+    // Get all projects and JOIN with user data
+    const postData = await Post.findAll({
+      include: [
+        {
+          model: User,
+          attributes: ['name'],
+        },
+      ],
+    });
+
+    // Serialize data so the template can read it
+    const posts = postData.map((post) => post.get({ plain: true }));
+
+    // Pass serialized data and session flag into template
+    res.render('posts', { 
+      posts,
+      logged_in: req.session.logged_in 
+    });
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
 
 //how does this route work? Why is it in homeRoutes?
@@ -33,10 +57,24 @@ router.get("/", (req, res) => {
 //   }
 // });
 
+router.get('/dashboard', withAuth, async (req, res) => {
+  try {
+    // Find the logged in user based on the session ID
+    const userData = await User.findByPk(req.session.user_id, {
+      attributes: { exclude: ['password'] },
+      include: [{ model: Post }]
+    });
 
+    const user = userData.get({ plain: true });
 
-
-
+    res.render('dashboard', {
+      ...user,
+      logged_in: true
+    });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
 
 router.get('/login', (req, res) => {
     // If the user is already logged in, redirect the request to another route
