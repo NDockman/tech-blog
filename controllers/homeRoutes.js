@@ -7,7 +7,7 @@ const withAuth = require('../utils/auth');
 //   // When on the homepage and a blog post is clicked, redirect using  res.redirect("/post/:id")
 // });
 
-router.get("*#")
+
 
 router.get('/', async (req, res) => {
   try {
@@ -34,7 +34,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-//how does this route work? Why is it in homeRoutes?
+//
 // router.get('/post/:id', async (req, res) => {
 //   try {
 //     const postData = await Post.findByPk(req.params.id, {
@@ -76,8 +76,17 @@ router.get('/dashboard', withAuth, async (req, res) => {
   }
 });
 
+router.get("/dashboard/new", async (req, res) => {
+  try {
+    res.render("newPost")
+  }
+  catch {
+    res.status(500).json(err);
+  }
+})
+
 router.get('/login', (req, res) => {
-    // If the user is already logged in, redirect the request to another route
+    // If the user is already logged in, redirect the request to their dashboard
     if (req.session.logged_in) {
       res.redirect('/dashboard');
       return;
