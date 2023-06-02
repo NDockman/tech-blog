@@ -1,5 +1,5 @@
-const { DATE } = require('sequelize');
 
+// Seed data for posts
 const postData = [
   {
     post_title: 'CSS Frameworks',
@@ -9,7 +9,6 @@ const postData = [
   {
     post_title: 'React Basics',
     text: "Vel odio expetendis cu, vix ex latine aliquam adolescens. Ne utinam accommodare duo.",
-    //date_created: DATE,
     user_id: 2,
   }
 ];
